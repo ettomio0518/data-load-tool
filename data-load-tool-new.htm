@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>データの読み込みツール</title>
+  <style>
+    body {
+      background-color: #cbe4e4;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+      color: #0000ff;            
+    }
+    h4 {
+      font-size: 16px;
+      color: #b16565;            
+    }  
+    p {
+      font-size: 16px;
+    }
+    button {
+      padding: 3px 10px;
+      background-color: #ccffff;
+      border: 1px solid #0000ff;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b2ebf2;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+    }
+    .top-right-button {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background-color: #ccffff;
+      color: black;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 14px;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    .top-right-button:hover {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h1>データ読み込みツール</h1>
+  <button class="top-right-button" onclick="window.close()">閉じる</button>
+
+    <h3>初めに:</h3>
+    <p>このツールは、ダウンロードフォルダにあるJSONファイルを読み込み、表示されたデータをコピーするためのものです。</p>
+
+    <h3>JSONファイルの選択と読み込み</h3>
+    <h4>・読み込みたいJSONファイルを選択してください。</h4>
+    
+  <input type="file" id="fileInput" accept=".json"><br><br>
+
+  <label for="output">読み込んだデータ:</label>
+  <textarea id="output" readonly></textarea><br>
+
+    <h4>・読み込んだデータを全て選択してコピーします。</h4>
+  <button onclick="copyToClipboard()">全選択してコピー</button>
+
+    <p class="note">テキストエリア内の全てのデータが選択され、コピーされました。</p>
+    
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const content = e.target.result;
+          document.getElementById('output').value = content;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    function copyToClipboard() {
+      const textarea = document.getElementById('output');
+      textarea.select();
+      document.execCommand('copy');
+    }
+  </script>
+  <br>
+  <p>----- 250620 ettomio</p>
+</body>
+</html>
